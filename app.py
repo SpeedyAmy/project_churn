@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 
 ### Config
 st.set_page_config(
-    page_title="Predicting churn rate",
+    page_title="Predicting churning rate",
     #page_icon="💸 ",
     layout="wide"
 )
@@ -26,13 +26,13 @@ st.markdown("""
 """)
 
 # Use `st.cache` when loading data is extremly useful
-# because it will cache your data so that your app 
+# because it will cache the data so that the app 
 # won't have to reload it each time you refresh your app
 @st.cache
 def load_data(nrows):
-    #here we will put raw data with all exploration job done before the preprocessing
-    #exploring data from base_client (row=uniqu client)
-    data = pd.read_csv(db_clients, nrows=nrows) 
+    #here we will put raw data with all exploration job done before the preprocessing for training model
+    #exploring data from base_client (row=unique client)
+    data = pd.read_csv("db_clients.csv", nrows=nrows) 
     #data["Date"] = data["Date"].apply(lambda x: pd.to_datetime(",".join(x.split(",")[-2:])))
     #data["currency"] = data["currency"].apply(lambda x: pd.to_numeric(x[1:]))
     return data
