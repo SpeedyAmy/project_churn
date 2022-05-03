@@ -10,7 +10,7 @@ See deployment for notes on how to deploy the project on a live system.
 
 ### Data
 
-I worked on this project in collbortaion with a fintech who provided me with their real business data. Theyasked me to challenge their own machine learning prediction model. 
+I worked on this project in collaboration with a fintech who provided me with their real business data. They asked me to challenge their machine learning prediction model. 
 I used a csv file where clients related data was extracted every month with informations like churning date if exists, usage of the budget solution maangement, general informations about the client, marketing data ...
 The file can not be shared in this repo for abvious confidentiality reasons.
 
