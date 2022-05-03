@@ -2,8 +2,10 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import matplotlib.pyplot as plt
 import plotly.express as px 
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 
 ### Config
@@ -51,38 +53,115 @@ if st.checkbox('Show raw data'):
     st.subheader('Raw data')
     st.write(data)    
 
-## Churn rate
+## plotting churn proportion in client database 
 st.subheader("Proportion of churn")
 st.markdown("""
-    text
+    The dataset is not balanced as less than 20% have churned
 """)
-labels = 'Churned', 'Retained'
-sizes = [data.TARGET[df_client['TARGET']==1].count(), data.TARGET[data['TARGET']==0].count()]
-explode = (0, 0.1)
-fig1, ax1 = plt.subplots(figsize=(10, 8))
-ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
-        shadow=True, startangle=90)
-ax1.axis('equal')
-plt.title("Proportion of customer churned and retained", size = 20)
-st.plt.show()
 
-### TAREGT relation with categorical variables
-st.subheader("TAREGT relation with categorical variables")
+c_labels = ['Retain', 'Churn']
+fig = go.Figure(data=[go.Pie(labels=c_labels, 
+                             values=data['TARGET'].value_counts(), 
+                             hole=.3,
+                            )
+                     ]
+               )
+
+# fig.update_trace(color_discrete_sequence=["red", "blue"])
+
+fig.update_layout(
+    title_text="Churn distribution",
+    title_x = 0.5,
+    legend=dict(
+        orientation="v",
+        yanchor="top",
+        y=1.0,
+        xanchor="left",
+        x=1
+    ),
+    legend_tracegroupgap = 90
+    )
+config = {'displaylogo': False}
+
+st.plotly_chart(fig, use_container_width=True)
+
+## plotting categorical features 
+st.subheader("Distribution of categorical features")
 st.markdown("""
-    text
-""")  
-fig, axarr = plt.subplots(2, 2, figsize=(20, 12))
-st.sns.countplot(x='COUNTRY', hue = 'TARGET',data = data, ax=axarr[0][0])
-st.sns.countplot(x='INDUSTRY', hue = 'TARGET',data = data, ax=axarr[0][1])
-st.sns.countplot(x='AGG_INDUSTRY', hue = 'TARGET',data = data, ax=axarr[1][0])
-st.sns.countplot(x='IS_FLAGSHIP', hue = 'TARGET',data = data, ax=axarr[1][1])
+    Few coutries represent the majority of clients""")
 
+fig = px.pie(data,names='COUNTRY',title='Proportion Of country client',hole=0.33)
+st.plotly_chart(fig, use_container_width=True)
 
-### Input data 
-st.subheader("Input data")
 st.markdown("""
-    text
-""")
+    Flagship is a flag to follow important clients by sales teams""")
+
+fig = px.pie(data,names='IS_FLAGSHIP',title='Propotion of flagued clients',hole=0.33)
+st.plotly_chart(fig, use_container_width=True)
+
+
+fig = px.pie(data,names='MAIN_ENTITY',title='Proportion of main entity clients',hole=0.33)
+st.plotly_chart(fig, use_container_width=True)
+
+st.markdown("""
+   Some outliers are shown below """)
+
+fig = px.pie(data,names='PLAN',title='Proportion of plan type',hole=0.33)
+st.plotly_chart(fig, use_container_width=True)
+
+st.markdown("""
+   Few outliers also here """)
+
+fig = px.pie(data,names='BUNDLE',title='Proportion of bundle type',hole=0.33)
+st.plotly_chart(fig, use_container_width=True)
+
+st.markdown("""
+   INdustry type is a key caracteristic """)
+
+fig = px.pie(data,names='AGG_INDUSTRY',title="Client's type of industry",hole=0.33)
+st.plotly_chart(fig, use_container_width=True)
+
+st.subheader("Distribution of nuemric features")
+st.markdown("""
+    """)
+
+#plotting distubiroin and boxplot of temporal features 
+st.subheader("Distribution of numeric features")
+st.markdown("""
+    Few coutries represent the majority of clients""")
+fig = make_subplots(rows=2, cols=1)
+
+tr1=go.Box(x=data['TENURE'],name='Tenure Box Plot',boxmean=True)
+tr2=go.Histogram(x=data['TENURE'],name='Tenure Histogram')
+
+fig.add_trace(tr1,row=1,col=1)
+fig.add_trace(tr2,row=2,col=1)
+
+fig.update_layout(height=500, width=1000, title_text="Distribution of Client Tenure")
+st.plotly_chart(fig, use_container_width=True)
+
+#plotting NPS clients distribution
+fig = make_subplots(rows=2, cols=1)
+tr1=go.Box(x=data['NPS'],name='NPS Box Plot',boxmean=True)
+tr2=go.Histogram(x=data['NPS'],name='NPS Histogram')
+
+fig.add_trace(tr1,row=1,col=1)
+fig.add_trace(tr2,row=2,col=1)
+
+fig.update_layout(height=500, width=1000, title_text="Distribution of Client NPS")
+st.plotly_chart(fig, use_container_width=True)
+
+#distribution of number of plastic card payment by the client
+fig = make_subplots(rows=2, cols=1)
+
+tr1=go.Box(x=data['NB_PLASTIC_CARD_PAYMENTS'],name='NB_PLASTIC_CARD_PAYMENTS Box Plot',boxmean=True)
+tr2=go.Histogram(x=data['NB_PLASTIC_CARD_PAYMENTS'],name='NB_PLASTIC_CARD_PAYMENTS Histogram')
+
+fig.add_trace(tr1,row=1,col=1)
+fig.add_trace(tr2,row=2,col=1)
+
+fig.update_layout(height=500, width=1000, title_text="Distribution of number of plastic card payments per client")
+st.plotly_chart(fig, use_container_width=True)
 
 #### Create two columns
 
@@ -90,8 +169,8 @@ st.markdown("""
 st.sidebar.header("Predicting churn rate")
 st.sidebar.markdown("""
     * [Proportion of churn](#proportion-of-churn)
-    * [Distribution of churn by country](#distribution-of-churn-by-country)
-    * TAREGT relation with categorical variables](#target-relation-with-categorical-variables)
+    * [Distribution of categorical features](#distribution-of-churn-by-country)
+    * [Distribution of numeric features"](#target-relation-with-categorical-variables)
     * [Input Data](#input-data)
 """)
 e = st.sidebar.empty()
