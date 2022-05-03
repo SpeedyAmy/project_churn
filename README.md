@@ -1,4 +1,4 @@
-# Project Title
+# How to predict a Fintech's client from churning
 
 The objective of this project is to predict whether a client (enterprise) of a B2B fintech will churn or not.
 The fintech provides a software that helps companies to manage their finance.
@@ -56,5 +56,5 @@ Creates a new dataset after cleaning the raw data, automates other visualisation
 
 ## Acknowledgments
 
-The company data scientist i've worked with who provided me the dataset and business explanations on dataset variables
+Many thanks to the company's data science team who trusted me with their data and provided me with precious explanations and business insights
 I was inspired by this Kaggle competition for the vizualisation and exploration of data https://www.kaggle.com/code/mekhdigakhramanian
