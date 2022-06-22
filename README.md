@@ -3,6 +3,10 @@
 The objective of this project is to predict whether a client (enterprise) of a B2B fintech will churn or not.
 The fintech provides a software that helps companies to manage their finance.
 
+## Details for certification
+* email : amina.nasri@gmail.com
+* video link : https://share.vidyard.com/watch/7SHkPfdS2VDnETFXWGoBqd?
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
@@ -11,7 +15,7 @@ See deployment for notes on how to deploy the project on a live system.
 ### Data
 
 I worked on this project in collaboration with a fintech who provided me with their real business data. They asked me to challenge their machine learning prediction model. 
-I used a csv file where clients related data was extracted every month with informations like churning date if exists, usage of the budget solution maangement, general informations about the client, marketing data ...
+I used a csv file where clients related data was extracted every month with informations like churning date if exists, usage of the budget solution management, general informations about the client, marketing data ...
 The file can not be shared in this repo for abvious confidentiality reasons.
 
 ### Prerequisites
@@ -47,7 +51,7 @@ If you need to deploy this repo, you will have to have the datastet (private for
 
 * understanding_data.ipynb : 
 Automates some computations of basic statistics for most features in the dataset (as no documentation was available to get the meaning of all features)
-* preprocessing.ipynb :
+* churn_model_main.ipynb :
 Creates a new dataset after cleaning the raw data, automates other visualisations, preprocesses data with sklearn and trains some classifiers from scikit-learn and compare their performances
 
 ## Authors
